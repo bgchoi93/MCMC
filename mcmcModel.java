@@ -27,54 +27,38 @@ public class mcmcModel {
 	/*																			*/
 
 	public static void main(String[] args){
-		mcmcModel test = new mcmcModel();
-		double[] probTest = {0.15, 0.3, 0.25, 0.2, 0.1};
-		int[] demTest = {2000, 2500, 3000, 3500, 4000};
-		int[] prodAmount = {2500, 3000, 3500, 4000};
-		test.setProbDistribution(test, probTest, demTest);
-		test.setProfitModel(test, 5, 3, 1);
-		test.setRandomNumbers(test, 500);
-		test.setSupply(test, prodAmount);
-		test.calculateExpectedValues(test, 2);
-		test.getMeanProfit(test);
-		test.getVarStdDev(test);
-		test.get95percentCI(test);
-		//System.out.println("Probability Test: " + Arrays.toString(probTest(test)));
-		//System.out.println("Expected Demands: " + Arrays.toString(test.eDemand));
-		//System.out.println("Revenue: " + Arrays.toString(test.eRevenue));
-		//System.out.println("Costs: " + Arrays.toString(test.eCost));
-		//System.out.println("Inventory Profit: " + Arrays.toString(test.eInventory));
-		//System.out.println("Profits: " + Arrays.toString(test.eProfit));
-		System.out.println("Mean Profit: " + test.meanProfit);
-		System.out.println("Std Dev: " + test.stdDev);
-		System.out.println("95% CI: (" + test.ci95[0] + ", " + test.ci95[1] + ")");
 		
 	}
 	
 	//array of model with given information including price, cost, and profit from inventory
-	public void setProfitModel(mcmcModel a, double p, double c, double pI) {
-		a.price = p;
-		a.cost = c;
-		a.profitInv = pI;
-	}
+	
 	
 	//array of model with given information 
 	//including probability distribution with demand amount
 	//and the cumulative probability distribution
 	public void setProbDistribution(mcmcModel a, double[] probability, int[] demandAmount){
-		/* Exception
-		double sumProb = 0; 
-		for(int i = 0; i < probability.length; i++){
-			sumProb += probability[i];
-		}
-		*/
-		
 		a.prob = probability;
 		a.demand = demandAmount;
 		a.cumProb = new double[prob.length];
 		a.cumProb[0] = 0;
 		for(int i = 1; i < a.cumProb.length; i++){
 			a.cumProb[i] = a.cumProb[i-1]+prob[i-1];
+		}
+	}
+	
+	//Checks if the probability is valid if the sum of the probabilities is equal to 1
+	//by using the fact that the machine epsilon of double precision is 2^-62
+	public static boolean checkProb(double[] prob){
+		double sum = 0;
+		for(int i = 0; i < prob.length; i++){
+			sum += prob[i];
+		}
+		double machineEpsilon = Math.pow(2, -62);
+		if(sum < 1.0 - machineEpsilon || sum > 1 + machineEpsilon){
+			return false;
+		}
+		else{
+			return true;
 		}
 	}
 	
