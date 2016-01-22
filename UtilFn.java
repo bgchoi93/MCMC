@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class UtilFn {
@@ -50,4 +51,17 @@ public class UtilFn {
 		return out;
 	}
 	
+	//Generate a random number between 0 and 1 (uniform distribution)
+	public static double randomNumberGenerator(){
+		Random rand = new Random();
+		double randomDouble = rand.nextDouble();
+		return randomDouble;
+	}
+	
+	public static double roundDecimalPoints(double x, int n){
+		double trunc;
+		trunc = Math.floor(x*Math.pow(10,n));
+		trunc = trunc/Math.pow(10,n);
+		return trunc;
+	}
 }
