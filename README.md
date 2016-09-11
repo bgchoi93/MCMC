@@ -36,6 +36,3 @@ I did not implement a text file input or any error handling for these since it i
 
 By testing several supply level; I tested 0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000
 , it gives you the answer that approximate 3000 units of supply gives you the maximum profit.
-
-Comment:
-As time permits, I am planning to integrate this java program with R and visualize the result.
